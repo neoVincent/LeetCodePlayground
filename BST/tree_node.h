@@ -13,8 +13,15 @@ namespace CLRS {
 namespace BST {
 
 void inorderTreeWalk(TreeNode* tree);
-
-
+void inorderTreeWalkNonRecursive(TreeNode* tree);
+void preoderTreeWalk(TreeNode* tree);
+void postorderTreeWalk(TreeNode* tree);
+TreeNode* treeSuccessor(TreeNode* tree, TreeNode* node);
+TreeNode* treePredecessor(TreeNode* tree, TreeNode* node);
+TreeNode* maximum(TreeNode* node);
+void treeInsert(TreeNode* tree, TreeNode* node);
+void treeDelete(TreeNode* tree, TreeNode* node);
+void transplant(TreeNode*tree, TreeNode* from, TreeNode* to);
 
 } // TreeNode
 
