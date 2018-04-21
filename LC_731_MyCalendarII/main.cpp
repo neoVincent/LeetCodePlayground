@@ -3,31 +3,43 @@
 
 using namespace std;
 
+
+
 class MyCalendarTwo
 {
 public:
+
+    class CalendarNode
+    {
+        public:
+
+            CalendarNode(int start, int end)
+            {
+                this->start = start;
+                this->end = end;
+                isOverlap = false;
+                this->left = nullptr;
+                this->right = nullptr;
+            }
+
+            int start,end;
+            CalendarNode* left;
+            CalendarNode* right;
+            bool isOverlap;
+    };
 
     MyCalendarTwo()
     {
 
     }
 
-    MyCalendarTwo(int start, int end)
-    {
-        this->start = start;
-        this->end = end;
-        isOverlap = false;
-        this->left = nullptr;
-        this->right = nullptr;
-    }
-
     bool book(int start, int end)
     {
 
-        return insert(calendarTree,new MyCalendarTwo(start,end));
+        return insert(calendarTree,new CalendarNode(start,end));
     }
 
-    bool insert(MyCalendarTwo* tree, MyCalendarTwo* node)
+    bool insert(CalendarNode* tree, CalendarNode* node)
     {
         if (tree == nullptr)
         {
@@ -59,26 +71,24 @@ public:
 
             if (minStart != tree->start)
             {
-                return insert(tree,new MyCalendarTwo(minStart,tree->start));
+                return insert(tree,new CalendarNode(minStart,tree->start));
             }
 
             if (maxEnd != tree->end)
             {
-                return insert(tree, new MyCalendarTwo(tree->end,maxEnd));
+                return insert(tree, new CalendarNode(tree->end,maxEnd));
             }
         }
         return true;
     }
 
-    int start,end;
-    MyCalendarTwo* left;
-    MyCalendarTwo* right;
-    bool isOverlap;
 
-    static MyCalendarTwo* calendarTree;
+
+
+private:
+     CalendarNode* calendarTree;
 };
 
-MyCalendarTwo* MyCalendarTwo::calendarTree = nullptr;
 
 int main(int argc, char *argv[])
 {
