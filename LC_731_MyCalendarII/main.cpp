@@ -83,8 +83,6 @@ public:
     }
 
 
-
-
 private:
      CalendarNode* calendarTree;
 };
