@@ -5,43 +5,42 @@
 
 using namespace std;
 
+bool sameMapValue(unordered_map<char,int> &pmap, unordered_map<char,int> &smap)
+{
+    for(auto iter : smap )
+    {
+        if (pmap[iter.first] != iter.second) return false;
+    }
+    return true;
+}
+
 vector<int> findAnagrams(string s, string p)
 {
-
-
-    int x = 0, y = 0;
     vector<int> res;
+    unordered_map<char,int> pmap;
+    unordered_map<char,int> smap;
 
-    while(x < s.size() - p.size()+1)
+    for(int i = 0 ; i < p.size(); i++)
     {
-        unordered_map<char,int> dict;
-        for (char c : p)
-        {
-            dict[c]++;
-        }
-
-        y = x;
-        int wordSize = p.size();
-        cout << "iteration start";
-        while(wordSize > 0 && y < s.size())
-        {
-            cout << s[y] << " ";
-            if ((--dict[s[y]]) < 0  )
-            {
-                break;
-            }
-            y++;
-            wordSize--;
-        }
-        cout << "iteration end" << endl;
-        if (wordSize == 0)
-        {
-            res.push_back(x);
-            cout <<"match index " <<x<<endl;
-
-        }
-        x++;
+        pmap[p[i]]++;
+        smap[s[i]]++;
     }
+
+    if (sameMapValue(pmap,smap)) res.push_back(0);
+
+    int pSize = p.size();
+    for(int i = pSize; i < s.size(); ++i)
+    {
+        // Remove the past effect
+        char si = s[i];
+        char siminus = s[i-pSize];
+        smap[s[i-pSize]]--;
+
+        smap[s[i]]++;
+
+        if (sameMapValue(pmap,smap)) res.push_back(i-pSize+1);
+    }
+
     return res;
 }
 
