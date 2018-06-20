@@ -16,6 +16,7 @@ int climb(int n, unordered_map<int,int>& stairMap)
 
 int climbStairs(int n)
 {
+    //Top down
     unordered_map<int,int> stairMap;
     stairMap[1] = 1;
     stairMap[2] = 2;
@@ -23,7 +24,19 @@ int climbStairs(int n)
     return stairMap[n];
 }
 
+int climbStairsBottmup(int n)
+{
+    //Bottom up
+    unordered_map<int,int> stairMap;
+    stairMap[1] = 1;
+    stairMap[2] = 2;
 
+    for(int i = 3; i<= n ; i++)
+    {
+        stairMap[i] = stairMap[i-2] + stairMap[i-1];
+    }
+    return stairMap[n];
+}
 
 int main(int argc, char *argv[])
 {
