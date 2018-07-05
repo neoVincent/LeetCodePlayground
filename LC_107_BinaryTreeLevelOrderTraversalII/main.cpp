@@ -20,6 +20,8 @@ vector<vector<int>> levelOrderBottom(TreeNode* root)
     vector<vector<int>> res;
     queue<TreeNode*> treeQueue;
 
+    if(!root) return res;
+
     TreeNode* node = root;
     treeQueue.push(node);
     while(!treeQueue.empty())
