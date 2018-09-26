@@ -16,9 +16,10 @@ vector<int> twoSum(vector<int>& nums, int target)
       }
       else
       {
-          udMap[i] = i + 1;
+          udMap[nums[i]] = i + 1;
       }
   }
+  return {-1,-1};
 }
 
 int main(int argc, char *argv[])
