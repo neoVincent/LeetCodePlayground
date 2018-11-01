@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <vector>
 #include <QDebug>
-
+#include <stack>
 using namespace std;
 
 class MinStack {

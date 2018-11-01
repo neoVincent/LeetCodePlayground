@@ -10,39 +10,42 @@ struct ListNode {
   ListNode(int x) : val(x), next(NULL) {}
 };
 
-int listLen(ListNode* head)
+pair<ListNode*, int> listLen(ListNode* head)
 {
     ListNode* p = head;
-    int len = 0;
-    while(p)
+    int len = 1;
+    while(p->next)
     {
         len++;
         p = p->next;
     }
-    return len;
+    return {p,len};
 }
 
 ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) 
 {
-   int lenA = listLen(headA);
-   int lenB = listLen(headB);
-   int diff = abs(lenA - lenB);
+   auto lenA = listLen(headA);
+   auto lenB = listLen(headB);
 
-   if (lenA > lenB)
+   if (lenA.first != lenB.first) return nullptr;
+
+   ListNode* shorter = lenA.second > lenB.second ? lenB.first : lenA.first;
+   ListNode* longer = lenA.second > lenB.second ? lenA.first : lenB.first;
+
+   int k = abs(lenA.second - lenB.second);
+
+   while(longer && k > 0)
    {
-       for(int i = 0 ; i < diff ; i++) headA = headA->next;
-   }
-   else
-   {
-       for(int i = 0 ; i < diff ; i++) headB = headB->next;
+       longer = longer->next;
    }
 
-   while(headA && headB)
+   while(longer && shorter)
    {
-       if(headA == headB) return headA;
-       headA = headA->next;
-       headB = headB->next;
+      if (longer == shorter) return longer;
+      longer = longer->next;
+      shorter = shorter->next;
    }
+
    return nullptr;
 
 }
