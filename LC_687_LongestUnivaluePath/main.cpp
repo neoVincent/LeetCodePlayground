@@ -7,31 +7,33 @@ struct TreeNode {
     int val;
     TreeNode *left;
     TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
+
+int maxlen = 0;
+
+int longestUnivaluePathUtil(TreeNode* root)
+{
+    if (root == nullptr) return  0;
+    int leftPath = longestUnivaluePathUtil(root->left);
+    int rightPath = longestUnivaluePathUtil(root->right);
+    int left = 0, right = 0;
+    if (root->left && root->left->val == root->val)
+    {
+        left = leftPath + 1 + left;
+    }
+    if (root->right && root->right->val == root->val)
+    {
+        right = rightPath + 1 + right;
+    }
+    maxlen = max(maxlen,right+left);
+    return max(right,left);
+}
 
 int longestUnivaluePath(TreeNode* root)
 {
-    if (root == nullptr)
-    {
-        return 0;
-    }
-
-    int left = longestUnivaluePath(root->left);
-    int right = longestUnivaluePath(root->right);
-
-    if (root->left && root->left->val == root->val)
-    {
-        return left + 1;
-    }
-
-
-    if (root->right && root->right->val == root->val)
-    {
-        return right + 1;
-    }
-
-    return max(left,right);
+    longestUnivaluePathUtil(root);
+    return maxlen;
 }
 
 int main(int argc, char *argv[])
