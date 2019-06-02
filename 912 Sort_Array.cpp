@@ -1,44 +1,34 @@
 912 Sort_Array.cpp
 
-// quick sort
 class Solution {
 public:
-    int partition(vector<int>& nums, int i, int j)
+    
+    int partition(vector<int>& nums, int p,int q)
     {
-        if (i < j)
+        int x = nums[q];
+        int i = p-1;
+        for(int j = p; j < q; j++)
         {
-            int p = nums[j];
-            int m = i - 1;
-            int n = i;
-            while(n <  j)
+            if (nums[j] < x)
             {
-                if (nums[n] > p)
-                    n++;
-                else
-                {
-                    m++;
-                    swap(nums[m],nums[n]);
-                    n++;
-                }
+                i++;
+                swap(nums[i],nums[j]);
             }
-            m++;
-            swap(nums[j],nums[m]);
-            return m;
         }
-        return -1;
-    }
-    void quickSort(vector<int>& nums, int i, int j)
-    {
-        if (i < j)
-        {
-            int p = partition(nums,i,j);
-            cout<<p<<endl;
-            quickSort(nums,i,p-1);
-            quickSort(nums,p+1,j);  
-        }
-        
+        i++;
+        swap(nums[i],nums[q]);
+        return i;
     }
     
+    void quickSort(vector<int>& nums, int p,int r)
+    {
+        if (p < r)
+        {
+            int q = partition(nums,p,r);
+            quickSort(nums,p,q-1);
+            quickSort(nums,q+1,r);
+        }
+    }
     vector<int> sortArray(vector<int>& nums) {
         // in place fast sort
         quickSort(nums,0,nums.size()-1);
