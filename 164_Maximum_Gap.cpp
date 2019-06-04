@@ -1,4 +1,6 @@
 164_Maximum_Gap.cpp
+
+// Radix sort
 class Solution {
 public:
     int maximumGap(vector<int>& nums) {
@@ -55,5 +57,50 @@ public:
             res = max(res, abs(nums[i] - nums[i+1]));
         }
         return res;
+    }
+};
+
+// Bucket sort
+class Solution {
+public:
+    
+    class Bucket {
+    public:
+        bool used = false;
+        int minval = numeric_limits<int>::max();
+        int maxval = numeric_limits<int>::min();
+        
+    };
+    
+    
+    int maximumGap(vector<int>& nums) {
+        // initial check
+        if (nums.size() == 1 || nums.size() == 0 ) return 0;
+        
+        int mini = *min_element(nums.begin(),nums.end());
+        int maxi = *max_element(nums.begin(),nums.end());
+        
+        int bucketSize = max(1,(maxi - mini)/((int)nums.size()-1));
+        int bucketNum = (maxi-mini)/bucketSize + 1;
+        vector<Bucket> buckets(bucketNum);
+        
+        for(auto num: nums)
+        {
+            int bucketIndex = (num-mini)/bucketSize;
+            buckets[bucketIndex].minval = min(num,buckets[bucketIndex].minval);
+            buckets[bucketIndex].maxval = max(num,buckets[bucketIndex].maxval);
+            buckets[bucketIndex].used = true;
+        }
+        
+        int prevBucketMax = mini, maxGap = 0;
+        for(auto bucket: buckets)
+        {
+            if(!bucket.used)
+                continue;
+            maxGap = max(maxGap, bucket.minval - prevBucketMax);
+            prevBucketMax = bucket.maxval;
+        }
+        
+        return maxGap;
     }
 };
