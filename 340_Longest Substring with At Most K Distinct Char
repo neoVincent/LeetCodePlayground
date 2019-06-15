@@ -1,0 +1,42 @@
+340_Longest Substring with At Most K Distinct Characters.cpp
+
+class Solution {
+public:
+    int lengthOfLongestSubstringKDistinct(string s, int k) {
+       // initial check
+        if (s.length() == 0 || k == 0) 
+            return 0;
+        
+        int l = 0;
+        int r = 0;
+        int ans = INT_MIN;
+        int dict[128]={0};
+        int counter = 0;
+        
+        while (r < s.length())
+        {
+            if (dict[s[r]] == 0)
+            {
+                counter++;
+            }
+            dict[s[r]]++;
+            
+            if (counter <= k)
+            {
+                ans = max(ans,r-l+1);
+            }
+            else if(counter > k)
+            {
+                while(l <= r && counter > k)
+                {
+                    dict[s[l]]--;
+                    if (dict[s[l]] == 0)
+                        counter--;
+                    l++;
+                }
+            }
+            r++;
+        }
+        return ans;
+    }
+};
