@@ -1,0 +1,38 @@
+Lint_1375_Substring_With_At_Least_K_Distinct_Characters.cpp
+
+class Solution {
+public:
+    /**
+     * @param s: a string
+     * @param k: an integer
+     * @return: the number of substrings there are that contain at least k distinct characters
+     */
+    long long kDistinctCharacters(string &s, int k) {
+        // sliding windos
+        // 2 pointer
+        int l = 0 , r = 0;
+        int alpha[26]={0};
+        int counter = 0;
+        long long res = 0;
+        while(r < s.size())
+        {
+            if(alpha[s[r] - 'a'] == 0)
+            {
+                counter++;
+            }
+            
+            alpha[s[r]-'a']++;
+            
+            while(counter >= k)
+            {
+                res += (s.size() - r);
+                alpha[s[l] - 'a']--;
+                if(alpha[s[l] - 'a'] == 0)
+                    counter--;
+                l++;
+            }
+            r++;
+        }
+        return res;
+    }
+};
